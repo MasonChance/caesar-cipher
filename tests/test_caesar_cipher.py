@@ -16,4 +16,4 @@ def test_alpha_crack_success():
 
 def test_alpha_crack_fail():
     gobbledy = 'ilupbyh wkuuiohh rpklk qoioiolqh'
-    assert crack(gobbledy) == 'no results found within 80 percent accuracy or more. encryption may not be of type ceasar cypher'
+    assert crack(gobbledy) == 'no results found within 80 percent accuracy or better. encryption may not be of type ceasar cypher'
