@@ -33,10 +33,43 @@ def encrypt(plain:str, key:int)-> str:
 def decrypt(cryptid, key):
   return encrypt(cryptid, -key)
 
+import nltk
+nltk.download('words', quiet=True)
+from nltk.corpus import words
 #first attempt brute force w/comparison to natural langlib 
 def crack(cryptid):
-  
+  #run decrypt logic for each possible shift.(iterable)
+  # at each iteration check string agianst lexical langlib.
+  # maths the percentage of words returned true from lanlib check
+  # return list [percOfWords, shift used to achieve, the result of decrypt with specified shift]
+  perc_match = 0
+  close_match_text = ''
+  highest_shift = 0
+  shift_perc = 0
+  for i in range(27):
+    sewer = decrypt(cryptid, i + 1).split(' ')
+    for check in sewer:
+      if check in words.words():
+        perc_match += 1
 
+    if perc_match / len(sewer) > .8:
+      print(f'sewer > .8 match {sewer}')
+      return [perc_match, i, ' '.join(sewer)]
+    elif i == 26 and perc_match / len(sewer) < .8:
+      
+      return [shift_perc, highest_shift, close_match_text] if close_match_text != '' else 'no results found within 80 percent accuracy or more. encryption may not be of type ceasar cypher'
+    else:
+      highest_shift = i
+      shift_perc = perc_match / 100 or 0 
+      if perc_match / len(sewer) > shift_perc:
+        close_match_text = ' '.join(sewer)
+
+      perc_match = 0
+    continue
+  return
+    
+
+    
 
 
 
